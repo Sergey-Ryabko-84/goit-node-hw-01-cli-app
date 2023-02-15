@@ -46,9 +46,30 @@ async function removeContact(contactId) {
   } catch (err) {console.log(err)}
 }
 
+async function updateContact(contactId, name, email, phone) {
+  try {
+    const contacts = JSON.parse(await fs.readFile(contactsPath));
+    const newContactData = {};
+    if (name) newContactData.name = name;
+    if (email) newContactData.email = email;
+    if (phone) newContactData.phone = phone;
+    const index = contacts.findIndex(({ id }) => id === contactId);
+    const changedContact = {
+      ...contacts[index],
+      ...newContactData
+    };
+    contacts.splice(index, 1, changedContact);
+    await fs.writeFile(contactsPath, JSON.stringify(contacts, null, 2));
+    return changedContact;
+  } catch (err) {
+    console.log(err);
+  }
+}
+
 module.exports = {
   listContacts,
   getContactById,
   addContact,
   removeContact,
-}
+  updateContact,
+};

@@ -3,6 +3,7 @@ const {
   getContactById,
   addContact,
   removeContact,
+  updateContact,
 } = require("./contacts");
 
 const { Command } = require("commander");
@@ -38,6 +39,11 @@ async function invokeAction({ action, id, name, email, phone }) {
     case "remove":
       contact = await removeContact(id);
       console.table(contact);
+      break;
+
+    case "update":
+      changedContact = await updateContact(id, name, email, phone);
+      console.table(changedContact);
       break;
 
     default:
