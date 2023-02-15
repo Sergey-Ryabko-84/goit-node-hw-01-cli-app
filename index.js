@@ -22,27 +22,27 @@ const argv = program.opts();
 async function invokeAction({ action, id, name, email, phone }) {
   switch (action) {
     case "list":
-      data = await listContacts();
-      console.table(JSON.parse(data));
+      const allContact = await listContacts();
+      console.table(JSON.parse(allContact));
       break;
 
     case "get":
-      contact = await getContactById(id);
+      const contact = await getContactById(id);
       console.table([contact]);
       break;
 
     case "add":
-      newContact = await addContact(name, email, phone);
+      const newContact = await addContact(name, email, phone);
       console.table([newContact]);
       break;
 
     case "remove":
-      contact = await removeContact(id);
-      console.table(contact);
+      const deleteContact = await removeContact(id);
+      console.table(deleteContact);
       break;
 
     case "update":
-      changedContact = await updateContact(id, name, email, phone);
+      const changedContact = await updateContact(id, name, email, phone);
       console.table(changedContact);
       break;
 
